@@ -29,8 +29,11 @@ jobs:
 
     - name: Download Minecraft 1.8 jar
       run: |
-        wget -O /home/runner/.gradle/caches/minecraft/net/minecraft/minecraft/1.8/minecraft-1.8.jar \
-        "https://piston-data.mojang.com/v1/objects/dd402e696e33738f4a9b9165ae6dd4db83698a69/client.jar"
+        mkdir -p /home/runner/.gradle/caches/minecraft/net/minecraft/minecraft/1.8
+        MANIFEST=$(curl -s https://launchermeta.mojang.com/mc/game/version_manifest.json)
+        URL=$(echo $MANIFEST | python3 -c "import sys,json; versions=json.load(sys.stdin)['versions']; print([v['url'] for v in versions if v['id']=='1.8'][0])")
+        CLIENT=$(curl -s $URL | python3 -c "import sys,json; print(json.load(sys.stdin)['downloads']['client']['url'])")
+        wget -O /home/runner/.gradle/caches/minecraft/net/minecraft/minecraft/1.8/minecraft-1.8.jar "$CLIENT"
 
     - name: Setup workspace
       working-directory: minebot_natural
