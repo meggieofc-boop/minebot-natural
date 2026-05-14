@@ -37,8 +37,8 @@ jobs:
 
     - name: Setup workspace
       working-directory: minebot_natural
-      run: ./gradlew setupDecompWorkspace --no-daemon -x getAssetsIndex -x getAssets -x downloadClient
-
+      run: ./gradlew setupDecompWorkspace --no-daemon -x getAssetsIndex -x getAssets -x downloadClient -x downloadServer -x extractUserDev
+      
     - name: Build
       working-directory: minebot_natural
       run: ./gradlew build --no-daemon -x getAssetsIndex -x getAssets
