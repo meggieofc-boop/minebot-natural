@@ -11,7 +11,7 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
 
     - name: Set up Java 8
       uses: actions/setup-java@v3
@@ -24,11 +24,11 @@ jobs:
 
     - name: Setup workspace
       working-directory: minebot_natural
-      run: ./gradlew setupDecompWorkspace --no-daemon
+      run: ./gradlew setupDecompWorkspace --no-daemon -x getAssetsIndex -x getAssets
 
     - name: Build
       working-directory: minebot_natural
-      run: ./gradlew build --no-daemon
+      run: ./gradlew build --no-daemon -x getAssetsIndex -x getAssets
 
     - name: Upload JAR
       uses: actions/upload-artifact@v4
